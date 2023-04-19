@@ -1,0 +1,27 @@
+﻿@using OnlineStore.Domain.DTOs
+@{
+	ViewData["Title"] = "Details";
+}
+<div class="container">
+	<h1 class="text-center mb-5">@Model.Name</h1>
+
+	<div class="row">
+		<div class="col-md-6">
+			<img src="@Model.Thumbnail" class="img-fluid" alt="@Model.Name">
+		</div>
+		<div class="col-md-6">
+			<h2>@Model.Name</h2>
+			<p>@Model.Description</p>
+			<p><strong>Price:</strong> @Model.UnitPrice.ToString("C")</p>
+			<p><strong>Category:</strong> @Model.CategoryName</p>
+			<p><strong>Added on:</strong> @Model.CreatedAt.ToString("g")</p>
+		</div>
+	</div>
+
+	 <div class="row mt-4">
+        <div class="col">
+            <a href="/Products/Edit/@Model.Id" class="btn btn-warning">Edit</a>
+            <a href="/Products/Delete/@Model.Id" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
+        </div>
+     </div>
+</div>

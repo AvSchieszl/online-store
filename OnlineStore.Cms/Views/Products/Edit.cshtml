@@ -1,0 +1,39 @@
+﻿@model OnlineStore.Domain.DTOs.ProductDto
+
+@{
+    ViewData["Title"] = "Edit Product";
+}
+
+<div class="container">
+    <h1 class="text-center mb-5">Edit Product</h1>
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Name</label>
+            <input asp-for="Name" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label">Description</label>
+            <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Thumbnail" class="form-label">Thumbnail URL</label>
+            <input asp-for="Thumbnail" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="UnitPrice" class="form-label">Unit Price</label>
+            <input asp-for="UnitPrice" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="CategoryId" class="form-label">Category</label>
+            <select asp-for="CategoryId" class="form-select">
+                @foreach (var category in (IEnumerable<OnlineStore.Domain.Entities.ProductCategory>)ViewBag.Categories)
+                {
+                    <option  value="@category.Id">@category.Name</option>
+                }
+            </select>
+
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>

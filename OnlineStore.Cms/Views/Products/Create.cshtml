@@ -1,0 +1,36 @@
+﻿@model OnlineStore.Domain.DTOs.ProductDto
+
+@{
+    ViewData["Title"] = "Create Product";
+}
+
+<div class="container">
+    <h1 class="text-center mb-5">Create Product</h1>
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Name</label>
+            <input asp-for="Name" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label">Description</label>
+            <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Thumbnail" class="form-label">Thumbnail URL</label>
+            <input asp-for="Thumbnail" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="UnitPrice" class="form-label">Unit Price</label>
+            <input asp-for="UnitPrice" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="CategoryId" class="form-label">Category</label>
+            <select asp-for="CategoryId" class="form-select">
+                <!-- Replace the following options with actual categories fetched from the database -->
+                <option value="1">Cameras</option>
+                <option value="2">Footwear</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+</div>

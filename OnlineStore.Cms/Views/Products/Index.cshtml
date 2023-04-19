@@ -1,0 +1,74 @@
+﻿@using OnlineStore.Domain.DTOs;
+@using OnlineStore.Domain.Specifications;
+@{
+	ViewData["Title"] = "Index";
+    int totalPages = (int)Math.Ceiling((double)Model.Products.Count / Model.Products.PageSize);
+    int currentPage = Model.Products.PageIndex;
+}
+<div class="container">
+	<h1 class="text-center mb-5">Our Products</h1>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">Our Products</h1>
+        <a href="/Products/Create" class="btn btn-primary">Create New Product</a>
+    </div>
+
+    <div class="d-flex justify-content-between mb-4">
+        <div>
+            <label for="sort" class="form-label">Sort by</label>
+            <select id="sort" class="form-select" onchange="window.location.href='?sort=' + this.value + '&category=' + document.getElementById('category').value;">
+                <option value="">Default</option>
+                <option value="priceAsc">Price: Low to High</option>
+                <option value="priceDesc">Price: High to Low</option>
+                <option value="nameAsc">Name: A to Z</option>
+                <option value="nameDesc">Name: Z to A</option>
+                <option value="dateAsc">Date Added: Oldest First</option>
+                <option value="dateDesc">Date Added: Newest First</option>
+            </select>
+        </div>
+        <div>
+            <label for="category" class="form-label">Category</label>
+            <select id="category" class="form-select" onchange="window.location.href='?sort=' + document.getElementById('sort').value + '&category=' + this.value;">
+                <option value="">All Categories</option>
+                <option value="1">Cameras</option>
+                <option value="2">Footwear</option>
+            </select>
+        </div>
+    </div>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { pageindex = currentPage - 1 })">Previous</a>
+            </li>
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { pageindex = i })">@i</a>
+                </li>
+            }
+            <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { pageindex = currentPage + 1 })">Next</a>
+            </li>
+        </ul>
+    </nav>
+
+	<div class="row row-cols-1 row-cols-md-3 g-4">
+		@foreach (ProductDto product in Model.Products.Data)
+		{
+			<div class="col">
+				<div class="card">
+					<img src="@product.Thumbnail" class="card-img-top" alt="@product.Name">
+					<div class="card-body">
+						<h5 class="card-title">@product.Name</h5>
+						<p class="card-text">@product.UnitPrice.ToString("C")</p>
+						<p class="card-text"><small class="text-muted">@product.CategoryName</small></p>
+					</div>
+					<div class="card-footer">
+						<a href="/Products/@product.Id" class="btn btn-primary">View</a>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</div>
